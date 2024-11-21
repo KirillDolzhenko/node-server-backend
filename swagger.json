@@ -1,0 +1,465 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Node.js Server API",
+    "version": "1.0.0",
+    "description": "This is a Node.js Server API documentation"
+  },
+  "tags": [
+    {
+      "name": "users",
+      "description": "Everything about Users"
+    },
+    {
+      "name": "auth",
+      "description": "Access to service"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/users": {
+      "put": {
+        "tags": ["users"],
+        "summary": "Change info",
+        "description": "Changes info by JWT-token",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Your email",
+                    "example": "user@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Your password",
+                    "example": "your_password"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Your description",
+                    "example": "This is a description."
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "200": {
+            "description": "Changed user info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/200 Status"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data passed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400 Status"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid Bearer token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403 Status"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Not Found by ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404 Status"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["users"],
+        "summary": "Get a single user",
+        "description": "Fetches a user by ID. Only a user with the administrator role can access this route.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "A single user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200 Status"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/403 Status"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404 Status"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Get a single user",
+        "description": "Fetches a user by ID",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "required": true,
+                    "type": "string",
+                    "description": "Your email",
+                    "example": "user@example.com"
+                  },
+                  "password": {
+                    "required": true,
+                    "type": "string",
+                    "description": "Your password",
+                    "example": "your_password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A single user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User With Token"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data passed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400 Status"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404 Status"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/signup": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Get a single user",
+        "description": "Fetches a user by ID",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "required": true,
+                    "type": "string",
+                    "description": "Your email",
+                    "example": "user@example.com"
+                  },
+                  "password": {
+                    "required": true,
+                    "type": "string",
+                    "description": "Your password",
+                    "example": "your_password"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Your description",
+                    "example": "This is a description."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A single user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User With Token"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data passed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400 Status"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404 Status"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The data is already occupied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/409 Status"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "email": {
+            "type": "string",
+            "example": "user@example.com"
+          },
+          "description": {
+            "type": "string",
+            "example": "something"
+          },
+          "role": {
+            "type": "integer",
+            "example": 0
+          },
+          "created_at": {
+            "type": "string",
+            "example": "2024-11-21T11:47:29.000Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "example": "2024-11-21T11:47:29.000Z"
+          }
+        }
+      },
+      "User With Token": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "email": {
+            "type": "string",
+            "example": "user@example.com"
+          },
+          "description": {
+            "type": "string",
+            "example": "something"
+          },
+          "role": {
+            "type": "integer",
+            "example": 0
+          },
+          "created_at": {
+            "type": "string",
+            "example": "2024-11-21T11:47:29.000Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "example": "2024-11-21T11:47:29.000Z"
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTczMjIwMjYwMiwiZXhwIjoxNzMyMjg5MDAyfQ.MTd7Ug5RWXVH2PsvLoG_hRHGWnlWn4rJta_JFYUHEUQ"
+          }
+        }
+      },
+      "200 Status": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/User"
+          },
+          "statusCode": {
+            "type": "integer",
+            "example": 200
+          }
+        }
+      },
+      "400 Status": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "error": {
+                "type": "string",
+                "example": "Bad Request"
+              }
+            }
+          },
+          "statusCode": {
+            "type": "integer",
+            "example": 400
+          }
+        }
+      },
+      "403 Status": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "error": {
+                "type": "string",
+                "example": "Forbidden"
+              }
+            }
+          },
+          "statusCode": {
+            "type": "integer",
+            "example": 403
+          }
+        }
+      },
+      "404 Status": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "error": {
+                "type": "string",
+                "example": "Not Found"
+              }
+            }
+          },
+          "statusCode": {
+            "type": "integer",
+            "example": 404
+          }
+        }
+      },
+      "409 Status": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "error": {
+                "type": "string",
+                "example": "Conflict"
+              }
+            }
+          },
+          "statusCode": {
+            "type": "integer",
+            "example": 409
+          }
+        }
+      }
+    }
+  }
+}

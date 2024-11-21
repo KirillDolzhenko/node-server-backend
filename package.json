@@ -1,0 +1,41 @@
+{
+  "scripts": {
+    "start": "tsc && node dist/src/app.js",
+    "dev": "tsc-watch --onSuccess \"node dist/src/app.js\"",
+    "lint": "eslint . --ext .ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "@types/joi": "^17.2.3",
+    "@types/knex": "^0.16.1",
+    "@types/node": "^22.9.1",
+    "dotenv": "^16.4.5",
+    "eslint": "^9.15.0",
+    "globals": "^15.12.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.15.0"
+  },
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "@types/bcrypt": "^5.0.2",
+    "@types/body-parser": "^1.19.5",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-dist": "^3.30.5",
+    "@types/swagger-ui-express": "^4.1.7",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "http": "^0.0.1-security",
+    "joi": "^17.13.3",
+    "joi-extract-type": "^15.0.8",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "mysql": "^2.18.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-dist": "^5.18.2",
+    "swagger-ui-express": "^5.0.1",
+    "tsc-watch": "^6.2.1"
+  }
+}

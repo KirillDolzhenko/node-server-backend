@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    // "noEmit": true,
+    // "allowImportingTsExtensions": true,
+    "module": "CommonJS",
+    "target": "ESNext",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "strict": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+
+    "strictFunctionTypes": true,
+    "rootDir": "."
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  },
+  "lib": ["es2015"],
+  "include": ["src/**/*.ts", "knexfile.ts"],
+  "exclude": ["node_modules"]
+}
+
+// "src/migrations/YYYYMMDDHHMMSS_create_users.cjs"
+
+// {
+//   "compilerOptions": {
+//     "target": "ES6",
+//     "module": "CommonJS",
+//     "strict": true,
+//     "esModuleInterop": true,
+//     "outDir": "./dist",
+//     "skipLibCheck": true,
+//     "rootDirs": ["."]
+//   },
+//   "include": ["**/*.ts"],
+//   "exclude": ["node_modules"]
+// }
