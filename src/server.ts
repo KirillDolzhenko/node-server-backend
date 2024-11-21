@@ -2,6 +2,7 @@ import http from "http";
 import { jsonParser } from "./middlewares/jsonParser.middleware";
 import { urlToArray } from "./utils/urlConverts";
 import {
+  EnumContentType,
   IHandlerArgs,
   IMessageBody,
 } from "./types/modules/common/responses.types";
@@ -9,15 +10,16 @@ import {
 import fs from "fs";
 import path from "path";
 
-import { ErrorNotFoundRoute } from "./utils/errors";
+import { ErrorNotFound, ErrorNotFoundRoute } from "./utils/errors";
 import { UsersModule } from "./modules/users/users.module";
 import { AuthModule } from "./modules/auth/auth.module";
 import config from "./config";
 import { serveSwagger, swaggerSpec } from "./swagger";
 import * as swaggerUi from "swagger-ui-dist";
 import { send } from "process";
-import { sendResponse } from "./utils/sendResponse";
+import { sendData, sendResponse } from "./utils/sendResponse";
 import extContentType from "./utils/contentType";
+import staticFilesHandler from "./swagger/staticFilesHandler";
 
 export class ServerApp {
   private AuthModule = AuthModule;
@@ -42,9 +44,17 @@ export class ServerApp {
 
       this.handleRequest(req, res);
     });
-    server.listen(port, hostname, () =>
-      console.log(`Server is running on port ${port}`)
-    );
+    server.listen(port, hostname, () => {
+      console.log("======================");
+      console.log(
+        `\x1b[1mServer\x1b[0m\x1b[34m is running on link: \x1b[4mhttp://${hostname}:${port}\x1b[0m`
+      );
+      console.log("---------------------");
+      console.log(
+        `\x1b[1mSwagger\x1b[0m\x1b[34m is running on link: \x1b[4mhttp://${hostname}:${port}/api-docs\x1b[0m`
+      );
+      console.log("======================");
+    });
   }
 
   private async handleRequest(
@@ -59,7 +69,6 @@ export class ServerApp {
 
     jsonParser(req, res, () => {
       const data: IHandlerArgs = [req as IMessageBody, res, urlPathes];
-      console.log(urlPathes);
       switch (urlPathes[0]) {
         case "users":
           this.UsersModule.handlePath(...data);
@@ -68,80 +77,19 @@ export class ServerApp {
           this.AuthModule.handlePath(...data);
           break;
         case "api-docs":
-          // console.log(console.log(JSON.stringify(swaggerSpec)));
           if (!urlPathes[1]) {
             serveSwagger(...data);
             break;
           }
           break;
         case "swagger.json":
-          console.log("JSON");
-
-          res.writeHead(200, { "Content-Type": "application/json" });
+          res.setHeader("Content-Type", EnumContentType.JSON);
+          res.statusCode = 200;
           res.end(JSON.stringify(swaggerSpec));
 
           break;
         default:
-          // serveSwagger(...data);
-          const staticPath = path.join(
-            swaggerUi.getAbsoluteFSPath(),
-            urlPathes[0] || ""
-          );
-
-          if (fs.existsSync(staticPath)) {
-            fs.readFile(staticPath, (err, data) => {
-              if (err) {
-                ErrorNotFoundRoute(res);
-                return;
-              } else {
-                const extname = path.extname(req.url || "");
-                let contentType = extContentType(extname);
-
-                if (urlPathes[0] == "swagger-initializer.js") {
-                  const filePath = path.join(
-                    __dirname,
-                    "../../node_modules/swagger-ui-dist/swagger-initializer.js"
-                  );
-
-                  fs.readFile(filePath, "utf-8", (err, data) => {
-                    if (err) {
-                      // res.writeHead(404);
-                      console.log(err);
-                      res.end("File not found");
-                      return;
-                    }
-                    console.log(filePath);
-
-                    // Меняем стандартный URL JSON в JS
-                    const modifiedJs = data.replace(
-                      "https://petstore.swagger.io/v2/swagger.json",
-                      "./swagger.json"
-                    );
-
-                    // res.writeHead(200, {
-                    //   "Content-Type": "application/javascript",
-                    // });
-                    res.end(modifiedJs);
-
-                    return;
-                  });
-                  return;
-                } else {
-                  // res.end("DD");
-
-                  sendResponse(res, 200, contentType, data);
-
-                  return;
-                }
-
-                ErrorNotFoundRoute(res);
-
-                return;
-              }
-            });
-          } else {
-            return;
-          }
+          staticFilesHandler(...data);
       }
     });
   }

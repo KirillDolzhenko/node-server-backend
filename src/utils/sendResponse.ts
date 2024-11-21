@@ -7,11 +7,12 @@ export const sendResponse = async (
   contentType: string,
   data: unknown
 ) => {
+  console.log(contentType);
   res.setHeader("Content-Type", contentType);
   res.statusCode = statusCode;
 
   if (data) {
-    if (contentType == EnumContentType.JSON) {
+    if (contentType === EnumContentType.JSON) {
       res.end(
         JSON.stringify({
           data,
