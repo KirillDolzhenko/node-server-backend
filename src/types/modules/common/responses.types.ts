@@ -34,12 +34,6 @@ export type THandlerMiddleware = (
   urlPathes?: string[]
 ) => void;
 
-// export type THandlePath = (
-//     req: IMessageBody,
-//     res: http.ServerResponse<http.IncomingMessage>,
-//     urlPathes?: string[]
-//   ) => void;
-
 export interface IRoutes {
   [keys: string]: THandler;
 }

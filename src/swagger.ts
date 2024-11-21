@@ -1,9 +1,9 @@
-import { THandler } from "./types/modules/common/responses.types";
 import fs from "fs";
 import path from "path";
 import * as swaggerUi from "swagger-ui-dist";
 import swaggerJSDoc from "swagger-jsdoc";
 import config from "../swagger.json";
+import { THandler } from "./types/modules/common/responses.types";
 
 export const swaggerDefinition = config;
 
@@ -19,6 +19,6 @@ export const serveSwagger: THandler = (req, res) => {
     path.join(swaggerUi.getAbsoluteFSPath(), "index.html"),
     "utf-8"
   );
-  
+
   res.end(swaggerHtml);
 };

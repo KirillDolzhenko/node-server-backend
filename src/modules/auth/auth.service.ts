@@ -1,5 +1,4 @@
 import { schemaAuth, TAuth } from "./../../validations/auth.validation";
-import { IConnectionData } from "../../types/modules/common/responses.types";
 import { sendData } from "../../utils/sendResponse";
 import {
   dbGetUserByEmail,
@@ -17,6 +16,7 @@ import bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import config from "../../config";
 import { IUser } from "../../db/database";
+import { IConnectionData } from "../../types/modules/common/responses.types";
 
 export class AuthService {
   async setTokenToUser(user: IUser) {
@@ -25,7 +25,7 @@ export class AuthService {
         sub: user.id,
       },
       config.jwt.secret,
-      { expiresIn: "24h" }
+      { expiresIn: "24h" },
     );
 
     return {
@@ -38,7 +38,6 @@ export class AuthService {
     try {
       let { error } = schemaAuth.validate(data);
       if (error) {
-        console.log(error);
         ErrorBadRequest(connection.res, error);
         return;
       }
@@ -55,7 +54,6 @@ export class AuthService {
 
       const user = await dbInsertAndGetUser(value);
 
-      console.log(user);
       if (!user) {
         ErrorInternalServer(connection.res);
         return;

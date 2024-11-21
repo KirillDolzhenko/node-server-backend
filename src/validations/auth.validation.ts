@@ -7,7 +7,7 @@ export const schemaAuth = Joi.object({
     .max(50)
     .required(),
   password: Joi.string().min(7).max(50).required(),
-  description: Joi.string().max(500),
+  description: Joi.string().max(500).allow("").optional(),
 });
 
 export type TAuth = Joi.extractType<typeof schemaAuth>;

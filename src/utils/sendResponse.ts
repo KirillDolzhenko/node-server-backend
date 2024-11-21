@@ -7,7 +7,6 @@ export const sendResponse = async (
   contentType: string,
   data: unknown
 ) => {
-  console.log(contentType);
   res.setHeader("Content-Type", contentType);
   res.statusCode = statusCode;
 

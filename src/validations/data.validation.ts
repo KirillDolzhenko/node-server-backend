@@ -6,7 +6,7 @@ export const schemaContent = Joi.object({
     .email({ tlds: { allow: false } })
     .max(50),
   password: Joi.string().min(7).max(50),
-  description: Joi.string().max(500),
+  description: Joi.string().max(500).allow("", null).optional(),
 });
 
 export const schemaDataPut = Joi.object({

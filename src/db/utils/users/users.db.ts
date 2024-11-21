@@ -1,4 +1,3 @@
-import http from "http";
 import { TAuth } from "../../../validations/auth.validation";
 import db, { IUser, IUserOptional } from "../../database";
 import { EnumUsersRole } from "../../../types/db.types";
@@ -8,15 +7,12 @@ export async function dbInsertAndGetUser(data: TAuth): Promise<IUser | null> {
     let id = (
       await db("users").insert({
         ...data,
-        // ,
-        // role: EnumUsersRole.USER,
       })
     )[0];
     let user = (await db("users").where({ id }))[0];
 
     return user;
   } catch (error) {
-    console.log(error);
     return null;
   }
 }
@@ -28,8 +24,6 @@ export async function dbGetUserByEmail(email: string): Promise<IUser | null> {
         email,
       })
     )[0];
-
-    console.log(user);
 
     return user;
   } catch (error) {
@@ -44,8 +38,6 @@ export async function dbGetUserById(id: number): Promise<IUser | null> {
         id,
       })
     )[0];
-
-    console.log(user);
 
     return user;
   } catch (error) {
@@ -67,7 +59,6 @@ export async function dbUpdateUserById(
     if (!user) {
       throw "Invalid data";
     }
-    console.log(data);
 
     if (Object.keys(data).length) {
       let userStatus = await db("users")
@@ -93,8 +84,6 @@ export async function dbUpdateUserById(
 
     return userUpdated;
   } catch (error) {
-    console.log(error);
-
     return null;
   }
 }
@@ -109,8 +98,6 @@ export async function dbIsAdminUserById(id: number): Promise<Boolean | null> {
 
     return Number(user.role) === EnumUsersRole.ADMIN;
   } catch (error) {
-    console.log(error);
-
     return null;
   }
 }

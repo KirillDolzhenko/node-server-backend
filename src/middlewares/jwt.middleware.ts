@@ -1,9 +1,6 @@
 import config from "../config";
+import { THandlerMiddleware } from "../types/modules/common/responses.types";
 import { ErrorForbidden } from "../utils/errors";
-import {
-  THandler,
-  THandlerMiddleware,
-} from "./../types/modules/common/responses.types";
 import * as jwt from "jsonwebtoken";
 
 const middlewareJwt: THandlerMiddleware = (req, res, route, urlPathes) => {
@@ -36,7 +33,7 @@ const middlewareJwt: THandlerMiddleware = (req, res, route, urlPathes) => {
         },
         id: decoded.sub,
       },
-      urlPathes
+      urlPathes,
     );
   });
 

@@ -11,8 +11,8 @@ export async function up(knex: Knex): Promise<void> {
       .enu(
         "role",
         Object.values(EnumUsersRole).filter(
-          (value) => typeof value === "number"
-        )
+          (value) => typeof value === "number",
+        ),
       )
       .defaultTo(EnumUsersRole.USER);
     table.timestamps(true, true);

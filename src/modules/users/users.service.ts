@@ -1,4 +1,3 @@
-import { IConnectionData } from "../../types/modules/common/responses.types";
 import { sendData } from "../../utils/sendResponse";
 import {
   dbGetUserById,
@@ -7,11 +6,9 @@ import {
 } from "../../db/utils/users/users.db";
 import {
   ErrorBadRequest,
-  ErrorConflict,
   ErrorForbidden,
   ErrorInternalServer,
   ErrorNotFound,
-  ErrorUnauthorized,
 } from "../../utils/errors";
 
 import bcrypt from "bcrypt";
@@ -21,14 +18,13 @@ import {
   TDataGet,
   TDataPut,
 } from "../../validations/data.validation";
+import { IConnectionData } from "../../types/modules/common/responses.types";
 
 export class UsersService {
   async put(connection: IConnectionData, data: unknown) {
     try {
       let { error } = schemaDataPut.validate(data);
       if (error) {
-        console.log(error);
-        console.log("FFF");
         ErrorBadRequest(connection.res);
         return;
       }
@@ -44,7 +40,6 @@ export class UsersService {
 
       userUpdated = await dbUpdateUserById(value.id, value.data);
 
-      console.log(userUpdated);
       if (!userUpdated) {
         ErrorBadRequest(connection.res);
         return;
@@ -63,8 +58,6 @@ export class UsersService {
   }
 
   async get(connection: IConnectionData, data: unknown, urlPathes?: string[]) {
-    console.log(connection.req.body);
-
     try {
       if (!urlPathes) {
         ErrorNotFound(connection.res);

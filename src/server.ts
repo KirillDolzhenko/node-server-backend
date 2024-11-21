@@ -1,25 +1,16 @@
 import http from "http";
 import { jsonParser } from "./middlewares/jsonParser.middleware";
 import { urlToArray } from "./utils/urlConverts";
-import {
-  EnumContentType,
-  IHandlerArgs,
-  IMessageBody,
-} from "./types/modules/common/responses.types";
-
-import fs from "fs";
-import path from "path";
-
-import { ErrorNotFound, ErrorNotFoundRoute } from "./utils/errors";
 import { UsersModule } from "./modules/users/users.module";
 import { AuthModule } from "./modules/auth/auth.module";
 import config from "./config";
 import { serveSwagger, swaggerSpec } from "./swagger";
-import * as swaggerUi from "swagger-ui-dist";
-import { send } from "process";
-import { sendData, sendResponse } from "./utils/sendResponse";
-import extContentType from "./utils/contentType";
 import staticFilesHandler from "./swagger/staticFilesHandler";
+import {
+  IHandlerArgs,
+  IMessageBody,
+  EnumContentType,
+} from "./types/modules/common/responses.types";
 
 export class ServerApp {
   private AuthModule = AuthModule;
@@ -44,6 +35,7 @@ export class ServerApp {
 
       this.handleRequest(req, res);
     });
+
     server.listen(port, hostname, () => {
       console.log("======================");
       console.log(

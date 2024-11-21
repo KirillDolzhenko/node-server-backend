@@ -2,7 +2,7 @@
   "scripts": {
     "start": "tsc && node dist/src/app.js",
     "dev": "tsc-watch --onSuccess \"node dist/src/app.js\"",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
@@ -25,6 +25,8 @@
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-dist": "^3.30.5",
     "@types/swagger-ui-express": "^4.1.7",
+    "@typescript-eslint/eslint-plugin": "^8.15.0",
+    "@typescript-eslint/parser": "^8.15.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
     "http": "^0.0.1-security",

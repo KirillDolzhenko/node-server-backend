@@ -1,10 +1,10 @@
 import swaggerUi from "swagger-ui-dist";
-import { THandler } from "../types/modules/common/responses.types";
 import { ErrorNotFound, ErrorNotFoundRoute } from "../utils/errors";
 import { sendResponse } from "../utils/sendResponse";
 import fs from "fs";
 import path from "path";
 import extContentType from "../utils/contentType";
+import { THandler } from "../types/modules/common/responses.types";
 
 const staticFilesHandler: THandler = (req, res, urlPathes) => {
   if (!urlPathes) {
@@ -32,8 +32,6 @@ const staticFilesHandler: THandler = (req, res, urlPathes) => {
             __dirname,
             "../../../node_modules/swagger-ui-dist/swagger-initializer.js"
           );
-
-          console.log(filePath);
 
           fs.readFile(filePath, "utf-8", (err, data) => {
             if (err) {

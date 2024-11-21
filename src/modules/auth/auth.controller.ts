@@ -1,5 +1,4 @@
-import { IController } from "../../types/controllers.types";
-import { IMethods, THandler } from "../../types/modules/common/responses.types";
+import { THandler, IMethods } from "../../types/modules/common/responses.types";
 import { Controller } from "../../utils/controllers/controller";
 import { ErrorNotFoundRoute } from "../../utils/errors";
 import { AuthService } from "./auth.service";

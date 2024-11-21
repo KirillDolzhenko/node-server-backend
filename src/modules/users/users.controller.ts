@@ -1,7 +1,6 @@
 import { dbIsAdminUserById } from "../../db/utils/users/users.db";
 import middlewareJwt from "../../middlewares/jwt.middleware";
-import { IController } from "../../types/controllers.types";
-import { IMethods, THandler } from "../../types/modules/common/responses.types";
+import { THandler, IMethods } from "../../types/modules/common/responses.types";
 import { Controller } from "../../utils/controllers/controller";
 import { ErrorNotFoundRoute } from "../../utils/errors";
 import { UsersService } from "./users.service";
@@ -13,11 +12,6 @@ export class UsersController extends Controller<UsersService> {
       return;
     }
 
-    const connectionData = {
-      req,
-      res,
-    };
-
     middlewareJwt(req, res, this.service.put);
   };
 
@@ -28,13 +22,7 @@ export class UsersController extends Controller<UsersService> {
       return;
     }
 
-    const connectionData = {
-      req,
-      res,
-    };
-    
-
-    dbIsAdminUserById
+    dbIsAdminUserById;
 
     middlewareJwt(req, res, this.service.get, urlPathes);
   };
