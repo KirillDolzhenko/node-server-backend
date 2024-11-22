@@ -7,7 +7,7 @@
 В нижеприведенных параметрах, пожалуйста, укажите актуальные для вас:
 
 ```dotenv
-DATABASE*PORT=3306
+DATABASE_PORT=3306
 DATABASE_USER="root"
 DATABASE_PASSWORD="password123_"
 DATABASE_DATABASE="node_server"
